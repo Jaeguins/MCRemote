@@ -1,0 +1,2 @@
+# MCRemote
+RemoteManageMCServer
