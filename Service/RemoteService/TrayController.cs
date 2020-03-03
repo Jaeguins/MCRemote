@@ -47,8 +47,10 @@ namespace RemoteService
         protected override void Dispose( bool disposing )
         {
             // Clean up any components being used.
-            if( disposing )
-                base.Dispose( disposing );
+            if (disposing) {
+                TrayIcon.Dispose();
+            }
+            base.Dispose( disposing );
         }
     }
 }

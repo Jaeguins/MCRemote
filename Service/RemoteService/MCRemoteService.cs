@@ -20,22 +20,8 @@ namespace RemoteService
             server = new ServerManager(3320, Callback);
             tray = new TrayController(this);
             Application.Run(tray);
-            bool isEnd = true;
-            while (isEnd)
-            {
-                if (!tray.TrayIcon.Visible)
-                {
-                    server.Close();
-                    isEnd = false;
-                }
-                else if (server.terminated)
-                {
-                    tray.TrayIcon.Visible = false;
-                    isEnd = false;
-                }
-
-                Thread.Sleep(0);
-            }
+            server.NowThread?.Join();
+            tray.TrayIcon.Visible = false;
         }
 
         public void Callback(StreamReader reader, StreamWriter writer)
@@ -73,10 +59,10 @@ namespace RemoteService
                 $">> {(option.GetOption(Options.ExecutionCommand) + option.GetOption(Options.ExecutionPath))}");
         }
 
-        private void GetStatus(string[] commands, StreamWriter writer)
-        {
-            if (runningTarget != null && !runningTarget.HasExited) writer.WriteLine("Running");
-            else writer.WriteLine("StandBy");
+        private void GetStatus(string[] commands, StreamWriter writer) {
+            string ret = runningTarget != null && !runningTarget.HasExited ? "Running" : "StandBy";
+            writer.WriteLine(ret);
+            Console.WriteLine(ret);
         }
 
         public void ShutdownByUI() => Environment.Exit(0);

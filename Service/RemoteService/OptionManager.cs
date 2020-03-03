@@ -35,6 +35,7 @@ namespace RemoteService
                     if (string.Equals(line[0], optionTooltip[i], StringComparison.OrdinalIgnoreCase))
                     {
                         optionData[i] = line[1];
+                        Console.WriteLine($"Loaded {optionTooltip[i]} = {optionData[i]}");
                         break;
                     }
                 }
